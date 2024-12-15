@@ -1,0 +1,3 @@
+ru.clevertec.config.PerformanceMonitorAutoConfiguration
+ru.clevertec.aspect.PerformanceMonitorAspect
+ru.clevertec.config.PerformanceMonitorProperties

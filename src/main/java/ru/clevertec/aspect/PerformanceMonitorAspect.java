@@ -6,11 +6,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 import ru.clevertec.config.PerformanceMonitorProperties;
 
 @Aspect
-@Component
 @Slf4j
 @RequiredArgsConstructor
 public class PerformanceMonitorAspect {
@@ -29,10 +27,7 @@ public class PerformanceMonitorAspect {
         Object result = joinPoint.proceed();
         long executionTime = System.currentTimeMillis() - startTime;
 
-        if (executionTime >= performanceMonitorProperties.getMinExecutionTime()) {
-            String methodName = joinPoint.getSignature().toShortString();
-            log.info("Method [%s] executed in [%d ms]%n", methodName, executionTime);
-        }
+        if (executionTime >= performanceMonitorProperties.getMinExecutionTime()) log.info("Method {} executed in {} ms.", joinPoint.getSignature().toShortString(), executionTime);
         return result;
     }
 
