@@ -1,9 +1,12 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'ru.clevertec'
-version = '1.0-SNAPSHOT'
+version = '1.0.0'
+description = 'Performance Monitoring Starter'
+
 
 repositories {
     mavenCentral()
@@ -12,6 +15,7 @@ repositories {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
 }
 
 wrapper {
@@ -27,11 +31,39 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.30'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.4.0'
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                "Implementation-Title": project.name,
+                "Implementation-Version": project.version
+        )
+    }
+    archivesBaseName = project.name
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+tasks.build {
+    dependsOn publish
 }

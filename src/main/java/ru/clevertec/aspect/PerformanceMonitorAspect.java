@@ -26,8 +26,8 @@ public class PerformanceMonitorAspect {
         long startTime = System.currentTimeMillis();
         Object result = joinPoint.proceed();
         long executionTime = System.currentTimeMillis() - startTime;
-
-        if (executionTime >= performanceMonitorProperties.getMinExecutionTime()) log.info("Method {} executed in {} ms.", joinPoint.getSignature().toShortString(), executionTime);
+        if (executionTime >= performanceMonitorProperties.getMinExecutionTime())
+            log.info("Method {} executed in {} ms.", joinPoint.getSignature().toShortString(), executionTime);
         return result;
     }
 
